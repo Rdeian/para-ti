@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Nosso Amor 💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      background: linear-gradient(-45deg, #3a69f3, #6699ff, #3366cc, #003399);
+      background-size: 400% 400%;
+      animation: gradiente 15s ease infinite;
+      color: #fff;
+      font-family: 'Comic Sans MS', cursive;
+      text-align: center;
+      padding: 50px;
+      position: relative;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    h1 {
+      font-size: 3em;
+      text-shadow: 2px 2px 8px #000000aa;
+    }
+
+    #contadorDias {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #fce4ec;
+    }
+
+    #carrossel {
+      position: relative;
+      width: 300px;
+      margin: 20px auto;
+    }
+
+    #carrossel img {
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 0 20px #ff99cc;
+    }
+
+    .botoes-carrossel {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+
+    .botoes-carrossel button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 10px;
+      background-color: #ff66aa;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 0 10px #ff66aa;
+    }
+
+    .botoes-carrossel button:hover {
+      background-color: #e05599;
+    }
+
+    #botaoMusica {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #ff66aa;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 1em;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ff66aa;
+    }
+
+    #pergunta {
+      margin-top: 40px;
+      font-size: 1.4em;
+    }
+
+    .resposta {
+      margin-top: 10px;
+    }
+
+    .resposta button {
+      margin: 0 10px;
+      padding: 10px 20px;
+      border-radius: 10px;
+      background-color: #ff99cc;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 0 8px #ff66aa;
+    }
+
+    #respostaFinal {
+      margin-top: 20px;
+      font-size: 1.5em;
+      color: #ffc1e3;
+    }
+
+    #botaoIdioma, #botaoTulipas {
+      position: fixed;
+      top: 20px;
+      padding: 8px 15px;
+      background-color: #ff66aa;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 0 10px #ff66aa;
+      z-index: 1000;
+    }
+
+    #botaoIdioma {
+      right: 20px;
+    }
+    #botaoTulipas {
+      left: 20px;
+    }
+
+    /* Animação tulipas caindo */
+    .tulipa {
+      position: fixed;
+      top: -100px;
+      width: 40px;
+      height: 60px;
+      background: url('https://cdn-icons-png.flaticon.com/512/765/765624.png') no-repeat center/contain;
+      animation-name: cairTulipa;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    @keyframes gradiente {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes cairTulipa {
+      0% {
+        top: -100px;
+        opacity: 1;
+        transform: rotate(0deg);
+      }
+      100% {
+        top: 110vh;
+        opacity: 0;
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Jogo da velha estilos */
+    #jogoDaVelha {
+      margin: 40px auto;
+      max-width: 320px;
+    }
+    #tabuleiro {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-template-rows: repeat(3, 100px);
+      gap: 5px;
+      margin-bottom: 10px;
+    }
+    .casa {
+      background-color: #ff99cc;
+      border-radius: 10px;
+      font-size: 3em;
+      font-weight: bold;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      box-shadow: 0 0 8px #ff66aa;
+    }
+    #statusJogo {
+      font-size: 1.2em;
+      color: #ffc1e3;
+      margin-bottom: 10px;
+    }
+    #botaoReiniciar {
+      padding: 10px 20px;
+      background-color: #ff66aa;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ff66aa;
+    }
+  </style>
+</head>
+<body>
+  <button id="botaoIdioma" title="Trocar idioma">PT</button>
+  <button id="botaoTulipas" title="Ligar/Desligar tulipas">🌷 Tulipas</button>
+
+  <h1 id="tituloPrincipal">Oi, meu amor! 💖</h1>
+  <div id="contadorDias">Carregando...</div>
+
+  <!-- Carrossel -->
+  <div id="carrossel">
+    <img id="imagemCarrossel" src="foto.jpeg" alt="Foto de nós dois 💑" />
+    <div class="botoes-carrossel">
+      <button onclick="anteriorFoto()">⬅️</button>
+      <button onclick="proximaFoto()">➡️</button>
+    </div>
+  </div>
+
+  <!-- Botão Música -->
+  <button id="botaoMusica">🎶 Tocar/Parar Música</button>
+  <audio id="audio" loop>
+    <source src="TurningPage.mp3" type="audio/mpeg" />
+    Seu navegador não suporta áudio.
+  </audio>
+
+  <!-- Pergunta interativa -->
+  <div id="pergunta">Está feliz cmg?</div>
+  <div class="resposta">
+    <button onclick="responderSim()">Obv, vc é incrivel</button>
+    <button onclick="responderMais()">Claro, vc é perfeito</button>
+  </div>
+  <div id="respostaFinal"></div>
+
+  <!-- Jogo da Velha -->
+  <div id="jogoDaVelha">
+    <div id="statusJogo"></div>
+    <div id="tabuleiro">
+      <div class="casa" data-index="0"></div>
+      <div class="casa" data-index="1"></div>
+      <div class="casa" data-index="2"></div>
+      <div class="casa" data-index="3"></div>
+      <div class="casa" data-index="4"></div>
+      <div class="casa" data-index="5"></div>
+      <div class="casa" data-index="6"></div>
+      <div class="casa" data-index="7"></div>
+      <div class="casa" data-index="8"></div>
+    </div>
+    <button id="botaoReiniciar">Reiniciar Jogo</button>
+  </div>
+
+  <script>
+    // Datas e elementos
+    const dataInicio = new Date("2025-05-25T00:00:00");
+    const contadorDiasElem = document.getElementById("contadorDias");
+
+    const fotos = ["foto.jpeg", "foto 2.jpeg", "foto 4.jpeg", "foto 5.jpeg"];
+    let fotoAtual = 0;
+    const imagemCarrossel = document.getElementById("imagemCarrossel");
+    const audio = document.getElementById("audio");
+
+    // Idioma inicial
+    let idioma = "pt";
+
+    // Elementos para texto e respostas
+    const perguntaElem = document.getElementById("pergunta");
+    const respostaBtnSim = document.querySelectorAll(".resposta button")[0];
+    const respostaBtnMais = document.querySelectorAll(".resposta button")[1];
+    const respostaFinalElem = document.getElementById("respostaFinal");
+    const tituloPrincipalElem = document.getElementById("tituloPrincipal");
+    const botaoIdioma = document.getElementById("botaoIdioma");
+    const botaoTulipas = document.getElementById("botaoTulipas");
+
+    // Textos com traduções mantendo as respostas originais em português
+    const textos = {
+      pt: {
+        titulo: "Oi, meu amor! 💖",
+        contador: (dias) => `Estamos namorando há ${dias} dias.`,
+        pergunta: "Está feliz cmg?",
+        respostaSim: "Obv, vc é incrivel",
+        respostaMais: "Claro, vc é perfeito",
+        statusJogoVez: "Sua vez: ",
+        jogadorX: "Você (X)",
+        jogadorO: "Computador (O)",
+        jogoEmpatado: "Empatamos! ❤️",
+        jogoGanhou: "Você ganhou! 🎉",
+        jogoPerdeu: "Você perdeu! 😢",
+        reiniciar: "Reiniciar Jogo"
+      },
+      en: {
+        titulo: "Hi, my love! 💖",
+        contador: (days) => `We've been dating for ${days} days.`,
+        pergunta: "Are you happy with me?",
+        respostaSim: "Obv, vc é incrivel",
+        respostaMais: "Claro, vc é perfeito",
+        statusJogoVez: "Your turn: ",
+        jogadorX: "You (X)",
+        jogadorO: "Computer (O)",
+        jogoEmpatado: "It's a tie! ❤️",
+        jogoGanhou: "You won! 🎉",
+        jogoPerdeu: "You lost! 😢",
+        reiniciar: "Restart Game"
+      },
+      es: {
+        titulo: "Hola, mi amor! 💖",
+        contador: (dias) => `Llevamos ${dias} días juntos.`,
+        pergunta: "¿Estás feliz conmigo?",
+        respostaSim: "Obv, vc é incrivel",
+        respostaMais: "Claro, vc é perfeito",
+        statusJogoVez: "Tu turno: ",
+        jogadorX: "Tú (X)",
+        jogadorO: "Computadora (O)",
+        jogoEmpatado: "¡Empate! ❤️",
+        jogoGanhou: "¡Ganaste! 🎉",
+        jogoPerdeu: "¡Perdiste! 😢",
+        reiniciar: "Reiniciar Juego"
+      }
+    };
+
+    function atualizarContador() {
+      const agora = new Date();
+      const diff = agora - dataInicio;
+      const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+      contadorDiasElem.textContent = textos[idioma].contador(dias);
+    }
+
+    // Carrossel
+    function mostrarFoto(indice) {
+      if (indice < 0) {
+        fotoAtual = fotos.length - 1;
+      } else if (indice >= fotos.length) {
+        fotoAtual = 0;
+      } else {
+        fotoAtual = indice;
+      }
+      imagemCarrossel.src = fotos[fotoAtual];
+    }
+
+    function anteriorFoto() {
+      mostrarFoto(fotoAtual - 1);
+    }
+
+    function proximaFoto() {
+      mostrarFoto(fotoAtual + 1);
+    }
+
+    // Música play/pause
+    const botaoMusica = document.getElementById("botaoMusica");
+    botaoMusica.addEventListener("click", () => {
+      if (audio.paused) {
+        audio.play();
+        botaoMusica.textContent = "⏸️ Parar Música";
+      } else {
+        audio.pause();
+        botaoMusica.textContent = "🎶 Tocar Música";
+      }
+    });
+
+    // Perguntas e respostas
+    function responderSim() {
+      respostaFinalElem.textContent = "Te amo muito! 💕";
+    }
+    function responderMais() {
+      respostaFinalElem.textContent = "Você é tudo pra mim! 😘";
+    }
+
+    // Trocar idioma
+    botaoIdioma.addEventListener("click", () => {
+      if (idioma === "pt") idioma = "en";
+      else if (idioma === "en") idioma = "es";
+      else idioma = "pt";
+
+      botaoIdioma.textContent = idioma.toUpperCase();
+
+      // Atualizar textos
+      tituloPrincipalElem.textContent = textos[idioma].titulo;
+      atualizarContador();
+      perguntaElem.textContent = textos[idioma].pergunta;
+      respostaBtnSim.textContent = textos[idioma].respostaSim;
+      respostaBtnMais.textContent = textos[idioma].respostaMais;
+      respostaFinalElem.textContent = "";
+      atualizarStatusJogo();
+      botaoReiniciar.textContent = textos[idioma].reiniciar;
+    });
+
+    // Tulipas caindo
+    let tulipasAtivas = false;
+    let intervalTulipas;
+    botaoTulipas.addEventListener("click", () => {
+      if (!tulipasAtivas) {
+        tulipasAtivas = true;
+        botaoTulipas.style.backgroundColor = "#f48fb1";
+        intervalTulipas = setInterval(criarTulipa, 400);
+      } else {
+        tulipasAtivas = false;
+        botaoTulipas.style.backgroundColor = "#ff66aa";
+        clearInterval(intervalTulipas);
+      }
+    });
+
+    function criarTulipa() {
+      const tulipa = document.createElement("div");
+      tulipa.classList.add("tulipa");
+      tulipa.style.left = Math.random() * window.innerWidth + "px";
+      tulipa.style.animationDuration = 4 + Math.random() * 3 + "s";
+      document.body.appendChild(tulipa);
+
+      // Remover após animação
+      setTimeout(() => {
+        tulipa.remove();
+      }, 7000);
+    }
+
+    // Jogo da velha
+
+    const casas = document.querySelectorAll(".casa");
+    const statusJogo = document.getElementById("statusJogo");
+    const botaoReiniciar = document.getElementById("botaoReiniciar");
+
+    let tabuleiro = ["", "", "", "", "", "", "", "", ""];
+    let jogadorAtual = "X"; // jogador é sempre X, computador O
+    let jogoAtivo = true;
+
+    function atualizarStatusJogo() {
+      if (!jogoAtivo) return;
+
+      if (jogadorAtual === "X") {
+        statusJogo.textContent = textos[idioma].statusJogoVez + textos[idioma].jogadorX;
+      } else {
+        statusJogo.textContent = textos[idioma].statusJogoVez + textos[idioma].jogadorO;
+      }
+    }
+
+    function verificarVencedor(tab) {
+      const vitorias = [
+        [0,1,2],[3,4,5],[6,7,8],
+        [0,3,6],[1,4,7],[2,5,8],
+        [0,4,8],[2,4,6]
+      ];
+
+      for (const comb of vitorias) {
+        const [a,b,c] = comb;
+        if (tab[a] && tab[a] === tab[b] && tab[a] === tab[c]) {
+          return tab[a];
+        }
+      }
+      return tab.includes("") ? null : "empate";
+    }
+
+    function jogar(index) {
+      if (!jogoAtivo || tabuleiro[index] !== "") return;
+
+      tabuleiro[index] = jogadorAtual;
+      casas[index].textContent = jogadorAtual;
+
+      const vencedor = verificarVencedor(tabuleiro);
+
+      if (vencedor === jogadorAtual) {
+        statusJogo.textContent = textos[idioma].jogoGanhou;
+        jogoAtivo = false;
+        return;
+      } else if (vencedor === "empate") {
+        statusJogo.textContent = textos[idioma].jogoEmpatado;
+        jogoAtivo = false;
+        return;
+      }
+
+      jogadorAtual = "O";
+      atualizarStatusJogo();
+      setTimeout(jogadaComputador, 500);
+    }
+
+    function jogadaComputador() {
+      if (!jogoAtivo) return;
+
+      let indicesVazios = [];
+      tabuleiro.forEach((v, i) => { if(v === "") indicesVazios.push(i); });
+
+      // Jogada aleatória simples
+      if (indicesVazios.length === 0) return;
+
+      const indice = indicesVazios[Math.floor(Math.random() * indicesVazios.length)];
+      tabuleiro[indice] = jogadorAtual;
+      casas[indice].textContent = jogadorAtual;
+
+      const vencedor = verificarVencedor(tabuleiro);
+
+      if (vencedor === jogadorAtual) {
+        statusJogo.textContent = textos[idioma].jogoPerdeu;
+        jogoAtivo = false;
+        return;
+      } else if (vencedor === "empate") {
+        statusJogo.textContent = textos[idioma].jogoEmpatado;
+        jogoAtivo = false;
+        return;
+      }
+
+      jogadorAtual = "X";
+      atualizarStatusJogo();
+    }
+
+    casas.forEach(casa => {
+      casa.addEventListener("click", () => {
+        jogar(parseInt(casa.getAttribute("data-index")));
+      });
+    });
+
+    botaoReiniciar.addEventListener("click", () => {
+      tabuleiro.fill("");
+      casas.forEach(casa => casa.textContent = "");
+      jogoAtivo = true;
+      jogadorAtual = "X";
+      atualizarStatusJogo();
+    });
+
+    // Inicializações
+    atualizarContador();
+    setInterval(atualizarContador, 1000 * 60 * 10); // Atualiza a cada 10 minutos
+    mostrarFoto(fotoAtual);
+    atualizarStatusJogo();
+
+  </script>
+</body>
+</html>
